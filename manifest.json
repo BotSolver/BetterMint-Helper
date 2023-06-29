@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "BetterMint Helper",
+  "version": "0.5",
+  "permissions": ["scripting", "tabs", "storage", "activeTab"],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_title": "BetterMint Auto Queue",
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.chess.com/*"],
+      "run_at": "document_start",
+      "js": ["js/contentscript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/script.js"],
+      "matches": ["https://*.chess.com/*"]
+    }
+  ]
+}

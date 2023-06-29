@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BetterMint</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f2f2f2;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #6c63ff;
+      animation: titleAnimation 1s ease-in-out forwards;
+    }
+
+    @keyframes titleAnimation {
+      0% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 0;
+      color: #888888;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .toggle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .toggle-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      animation: slideInAnimation 1s ease-in-out forwards;
+    }
+
+    @keyframes slideInAnimation {
+      0% {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .toggle-option label {
+      margin-left: 10px;
+      color: #444444;
+    }
+
+    .toggle {
+      display: inline-block;
+      position: relative;
+      width: 40px;
+      height: 20px;
+      margin-right: 10px;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .toggle input[type="checkbox"] {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 20px;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .4s;
+    }
+
+    input[type="checkbox"]:checked + .slider {
+      background-color: #6c63ff;
+    }
+
+    input[type="checkbox"]:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .slider-label {
+      margin-right: 5px;
+      color: #444444;
+      opacity: 0;
+      animation: glowAnimation 1s infinite alternate;
+    }
+
+    .slider-value {
+      font-size: 14px;
+      color: #888888;
+      opacity: 0;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .slider-input {
+      width: 100px;
+    }
+
+    .settings-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .settings-icon svg {
+      fill: #6c63ff;
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .settings-icon:hover svg {
+      transform: scale(1.2);
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+    }
+
+    .popup-content {
+      opacity: 0;
+      animation: popupAnimation 1s ease-in-out forwards;
+    }
+
+    @keyframes popupAnimation {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .popup p {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #333333;
+    }
+
+    .popup-close {
+      color: #888888;
+      cursor: pointer;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .popup-close:hover {
+      color: #6c63ff;
+    }
+  
+    .toggle-option label {
+    margin-left: 10px;
+    color: #444444;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .toggle-option label:hover {
+    color: #6c63ff;
+  }
+
+  .toggle-option .toggle {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+  }
+
+  .toggle-option .toggle input[type="checkbox"] {
+    display: none;
+  }
+
+  .toggle-option .toggle label.slider {
+    position: relative;
+    width: 28px;
+    height: 14px;
+    background-color: #ccc;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .toggle-option .toggle label.slider:before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: -2px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .toggle-option .toggle input[type="checkbox"]:checked + label.slider {
+    background-color: #6c63ff;
+  }
+
+  .toggle-option .toggle input[type="checkbox"]:checked + label.slider:before {
+    transform: translateX(14px);
+  }
+</style>
+</head>
+<body>
+  <div class="opening-sequence">
+    <h1>BetterMint</h1>
+    <p class="helper">Helper</p>
+  </div>
+
+  <div class="toggle-container">
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="masterToggle" type="checkbox">
+        <label class="slider" for="masterToggle"></label>
+      </div>
+      <label for="masterToggle">Enable Script</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoQueueToggle" type="checkbox">
+        <label class="slider" for="autoQueueToggle"></label>
+      </div>
+      <label for="autoQueueToggle">Auto Queue</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoRematchToggle" type="checkbox">
+        <label class="slider" for="autoRematchToggle"></label>
+      </div>
+      <label for="autoRematchToggle">Auto Rematch</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoPuzzleToggle" type="checkbox">
+        <label class="slider" for="autoPuzzleToggle"></label>
+      </div>
+      <label for="autoPuzzleToggle">Auto Puzzle</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoBadSportToggle" type="checkbox">
+        <label class="slider" for="autoBadSportToggle"></label>
+      </div>
+      <label for="autoBadSportToggle">Auto Bad Sport</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoGoodSportToggle" type="checkbox">
+        <label class="slider" for="autoGoodSportToggle"></label>
+      </div>
+      <label for="autoGoodSportToggle">Auto Good Sport</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="toggle">
+        <input id="autoResignToggle" type="checkbox">
+        <label class="slider" for="autoResignToggle"></label>
+      </div>
+      <label for="autoResignToggle">Auto Resign</label>
+    </div>
+
+    <div class="toggle-option">
+      <div class="slider-container">
+        <label class="slider-label" for="autoResignChanceSlider">Auto Resign Chance:</label>
+        <input id="autoResignChanceSlider" class="slider-input" type="range" min="0" max="1000" step="1" value="0">
+        <span id="autoResignChanceValue" class="slider-value">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 2C6.48 2 2 6.48 2 12c0 1.943.576 3.747 1.56 5.28l-1.217 2.122 2.122-1.217C8.253 19.424 10.057 20 12 20c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 16c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zm3-9h-2V7h2v2zm0 4h-2v-2h2v2z" />
+    </svg>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p>Coming soon...</p>
+      <p class="popup-close">Close</p>
+    </div>
+  </div>
+
+  <script>
+    const settingsIcon = document.querySelector('.settings-icon');
+    const popup = document.getElementById('popup');
+    const popupClose = document.querySelector('.popup-close');
+
+    settingsIcon.addEventListener('click', function() {
+      popup.style.display = 'block';
+    });
+
+    popupClose.addEventListener('click', function() {
+      popup.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
