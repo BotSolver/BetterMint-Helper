@@ -8,7 +8,7 @@ var newGameRequested = false;
 
 function detectAndClick() {
   var rematchButton = document.querySelector('button.ui_v5-button-component.ui_v5-button-basic[data-click-spam-id="5"]');
-  var acceptRematchButton = document.querySelector('button.ui_v5-button-component.ui_v5-button-basic[data-cy="sidebar-game-over-accept-rematch-button"]');
+  var acceptRematchButton = document.querySelector('button.ui_v5-button-component.ui_v5-button-basic[data-click-spam-id="11"]');
   var newGameButton = document.querySelector('button.ui_v5-button-component.ui_v5-button-basic[data-click-spam-id="4"]');
 
   if (!rematchRequested) {
@@ -53,7 +53,7 @@ function detectAndClick() {
             node.tagName === 'BUTTON' &&
             node.classList.contains('ui_v5-button-component') &&
             node.classList.contains('ui_v5-button-basic') &&
-            node.getAttribute('data-cy') === 'sidebar-game-over-accept-rematch-button'
+            node.getAttribute('data-click-spam-id') === '11'
           );
         });
 
